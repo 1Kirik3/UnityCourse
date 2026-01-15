@@ -1,5 +1,5 @@
+using System;
 using System.Collections;
-using TMPro;
 using UnityEngine;
 
 public class Counter : MonoBehaviour
@@ -7,31 +7,34 @@ public class Counter : MonoBehaviour
     [SerializeField] private int _incrementStep = 1;
     [SerializeField] private float _incrementDelay = 0.5f;
 
-    [SerializeField] private TextMeshProUGUI _textMeshPro;
+    [SerializeField] private InputReader _inputReader;
+
+    public event Action<int> CounterUpdated;
 
     private bool _isCounting = false;
     private int _counter = 0;
 
-    private void Start()
+    private void OnEnable()
     {
-        UpdateTextCounter();
-        StartCoroutine(IncrementCounter(_incrementDelay));
+        _inputReader.MouseButtonClicked += UpdateCountingStatement;
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            ToggleCounting();
+        _inputReader.MouseButtonClicked -= UpdateCountingStatement;
+    }
 
-            if (_isCounting)
-            {
-                StartCoroutine(IncrementCounter(_incrementDelay));
-            }
-            else
-            {
-                StopCoroutine(IncrementCounter(_incrementDelay));
-            }
+    private void UpdateCountingStatement()
+    {
+        _isCounting = !_isCounting;
+
+        if (_isCounting )
+        {
+            StartCoroutine(IncrementCounter(_incrementDelay));
+        }
+        else
+        {
+            StopCoroutine(IncrementCounter(_incrementDelay));
         }
     }
 
@@ -44,19 +47,9 @@ public class Counter : MonoBehaviour
             if (_isCounting)
             {
                 _counter += _incrementStep;
-                UpdateTextCounter();
+                CounterUpdated?.Invoke(_counter);
             }
         }
-    }
-
-    private void ToggleCounting()
-    {
-        _isCounting = !_isCounting;
-    }
-
-    private void UpdateTextCounter()
-    {
-        _textMeshPro.text = _counter.ToString();
     }
 
 }
