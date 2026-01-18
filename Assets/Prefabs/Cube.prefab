@@ -119,8 +119,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd48ffef2802ac418c8fce0cd23433d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Transform>k__BackingField: {fileID: 6128979558550370937}
   <Renderer>k__BackingField: {fileID: 2504408208339632748}
+  <Rigidbody>k__BackingField: {fileID: 8978465012873371577}
+  _baseExplosionForce: 500
+  _baseExplosionRadius: 5
 --- !u!54 &8978465012873371577
 Rigidbody:
   m_ObjectHideFlags: 0

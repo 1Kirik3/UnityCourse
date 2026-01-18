@@ -41,8 +41,12 @@ public class RaycastHandler : MonoBehaviour
                 _colorChanger.ChangeColor(newCube.Renderer);
                 newCube.ReduceScale();
             }
-        }
 
-        cube.Explode();
+            Destroy(cube.gameObject);
+        }
+        else
+        {
+            cube.Explode();
+        }
     }
 }
