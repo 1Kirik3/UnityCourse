@@ -5,6 +5,7 @@ public class RaycastHandler : MonoBehaviour
     [SerializeField] private ColorChanger _colorChanger;
     [SerializeField] private Spawner _spawner;
     [SerializeField] private Raycaster _raycaster;
+    [SerializeField] private Exploder _exploder;
     [SerializeField] private Transform _spawnPoint;
 
     private void OnEnable()
@@ -24,29 +25,26 @@ public class RaycastHandler : MonoBehaviour
 
     private void HandleRaycast(Cube cube)
     {
-        var splitChance = 1f;
-        var spawnGeneration = 1;
-
-        var isSplitted = cube.TrySplit(out spawnGeneration, out splitChance);
-
-        if (isSplitted)
+        if (cube.TrySplit())
         {
             var newCubes = _spawner.SpawnMultiple(cube.transform.position);
-            splitChance /= 2f;
-            spawnGeneration++;
+
+            int nextGeneration = cube.SpawnGeneration + 1;
+            float nextSplitChance = cube.SplitChance / 2f;
 
             foreach (var newCube in newCubes)
             {
-                newCube.Initilize(spawnGeneration, splitChance);
+                newCube.Initilize(nextGeneration, nextSplitChance);
                 _colorChanger.ChangeColor(newCube.Renderer);
                 newCube.ReduceScale();
             }
-
-            Destroy(cube.gameObject);
         }
         else
         {
-            cube.Explode();
+            _exploder.Explode(cube.transform.position, cube.SpawnGeneration);
         }
+
+        Destroy(cube.gameObject);
     }
+
 }
