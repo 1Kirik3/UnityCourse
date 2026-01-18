@@ -3,11 +3,11 @@ using UnityEngine;
 [RequireComponent(typeof(Renderer))]
 public class Cube : MonoBehaviour
 {
-    [field: SerializeField] public Renderer Renderer {  get; private set; }
+    private const float MinRandomNumberChance = 0f;
+    private const float MaxRandomNumberChance = 1f;
+    private const float ScaleFactor = 2f;
 
-    private const float _minRandomNumberChance = 0f;
-    private const float _maxRandomNumberChance = 1f;
-    private const float _scaleFactor = 2f;
+    [field: SerializeField] public Renderer Renderer {  get; private set; }
 
     private Vector3 _startScale;
     private int _spawnGeneration = 1;
@@ -22,7 +22,7 @@ public class Cube : MonoBehaviour
 
     public void ReduceScale()
     {
-        float scaleMultiplier = 1f / Mathf.Pow(_scaleFactor, _spawnGeneration - 1);
+        float scaleMultiplier = 1f / Mathf.Pow(ScaleFactor, _spawnGeneration - 1);
         transform.localScale = _startScale * scaleMultiplier;
     }
 
@@ -30,14 +30,9 @@ public class Cube : MonoBehaviour
     {
         spawnGeneration = _spawnGeneration;
         splitChance = _splitChance;
-        bool isSplitted = Random.Range(_minRandomNumberChance, _maxRandomNumberChance) <= _splitChance;
+        bool isSplitted = Random.Range(MinRandomNumberChance, MaxRandomNumberChance + 1) <= _splitChance;
 
-        if (isSplitted)
-        {
-            return true;
-        }
-
-        return false;
+        return isSplitted;
     }
 
     public void Explode()

@@ -3,28 +3,27 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private GameObject _cube;
-    [SerializeField] private Transform _spawnPosition;
+    private const int MinSpawnCount = 2;
+    private const int MaxSpawnCount = 6;
 
-    private const int _minSpawnCount = 2;
-    private const int _maxSpawnCount = 6;
+    [SerializeField] private Cube _cube;
 
-    public List<Cube> SpawnMultiple()
+    public List<Cube> SpawnMultiple(Vector3 spawnPoint)
     {
         List<Cube> newCubes = new List<Cube>();
-        var spawnCount = Random.Range(_minSpawnCount, _maxSpawnCount);
+        var spawnCount = Random.Range(MinSpawnCount, MaxSpawnCount);
 
         for (int i = 0; i < spawnCount; i++)
         {
-            var cube = Spawn();
+            var cube = Spawn(spawnPoint);
             newCubes.Add(cube);
         }
 
         return newCubes;
     }
 
-    public Cube Spawn()
+    public Cube Spawn(Vector3 spawnPoint)
     {
-        return Instantiate(_cube, _spawnPosition.position, Quaternion.identity)?.GetComponent<Cube>();
+        return Instantiate(_cube, spawnPoint, Quaternion.identity);
     }
 }

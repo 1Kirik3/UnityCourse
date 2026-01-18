@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RaycastHandler : MonoBehaviour
@@ -6,6 +5,7 @@ public class RaycastHandler : MonoBehaviour
     [SerializeField] private ColorChanger _colorChanger;
     [SerializeField] private Spawner _spawner;
     [SerializeField] private Raycaster _raycaster;
+    [SerializeField] private Transform _spawnPoint;
 
     private void OnEnable()
     {
@@ -14,7 +14,7 @@ public class RaycastHandler : MonoBehaviour
 
     private void Start()
     {
-        _spawner.SpawnMultiple();
+        _spawner.SpawnMultiple(_spawnPoint.position);
     }
 
     private void OnDisable()
@@ -31,7 +31,7 @@ public class RaycastHandler : MonoBehaviour
 
         if (isSplitted)
         {
-            var newCubes = _spawner.SpawnMultiple();
+            var newCubes = _spawner.SpawnMultiple(cube.transform.position);
             splitChance /= 2f;
             spawnGeneration++;
 
