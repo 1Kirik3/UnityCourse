@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class RaycastHandler : MonoBehaviour
 {
+    private const int SpawnGenerationStep = 1;
+    private const float SplitChanceDivider = 2f;
+
     [SerializeField] private ColorChanger _colorChanger;
     [SerializeField] private Spawner _spawner;
     [SerializeField] private Raycaster _raycaster;
@@ -29,8 +32,8 @@ public class RaycastHandler : MonoBehaviour
         {
             var newCubes = _spawner.SpawnMultiple(cube.transform.position);
 
-            int nextGeneration = cube.SpawnGeneration + 1;
-            float nextSplitChance = cube.SplitChance / 2f;
+            int nextGeneration = cube.SpawnGeneration + SpawnGenerationStep;
+            float nextSplitChance = cube.SplitChance / SplitChanceDivider;
 
             foreach (var newCube in newCubes)
             {
