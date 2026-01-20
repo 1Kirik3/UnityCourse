@@ -8,8 +8,6 @@ public class Cube : MonoBehaviour
     private const float MinRandomValue = 0f;
     private const float MaxRandomValue = 1f;
 
-    public event Action<Cube> Clicked;
-
     [field: SerializeField] public Renderer Renderer { get; private set; }
     [field: SerializeField] public Rigidbody Rigidbody { get; private set; }
     public int SpawnGeneration { get; private set; } = 1;
@@ -27,8 +25,4 @@ public class Cube : MonoBehaviour
         return UnityEngine.Random.Range(MinRandomValue, MaxRandomValue) <= SplitChance;
     }
 
-    private void OnMouseDown()
-    {
-        Clicked?.Invoke(this);
-    }
 }
