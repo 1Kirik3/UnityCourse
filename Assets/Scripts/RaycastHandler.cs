@@ -2,52 +2,38 @@ using UnityEngine;
 
 public class RaycastHandler : MonoBehaviour
 {
-    private const int SpawnGenerationStep = 1;
-    private const float SplitChanceDivider = 2f;
-
-    [SerializeField] private ColorChanger _colorChanger;
     [SerializeField] private Spawner _spawner;
     [SerializeField] private Raycaster _raycaster;
     [SerializeField] private Exploder _exploder;
-    [SerializeField] private Transform _spawnPoint;
+    [SerializeField] private Transform _initialSpawnPoint;
 
     private void OnEnable()
     {
-        _raycaster.OnCubeHitted += HandleRaycast;
+        _raycaster.OnCubeHitted += HandleCubeClick;
     }
 
     private void Start()
     {
-        _spawner.SpawnMultiple(_spawnPoint.position);
+        _spawner.CreateInitialCubes(_initialSpawnPoint.position);
     }
 
     private void OnDisable()
     {
-        _raycaster.OnCubeHitted -= HandleRaycast;
+        _raycaster.OnCubeHitted -= HandleCubeClick;
     }
 
-    private void HandleRaycast(Cube cube)
+    private void HandleCubeClick(Cube cube)
     {
-        if (cube.TrySplit())
+        if (cube.CanSplit())
         {
-            var newCubes = _spawner.SpawnMultiple(cube.transform.position);
-
-            int nextGeneration = cube.SpawnGeneration + SpawnGenerationStep;
-            float nextSplitChance = cube.SplitChance / SplitChanceDivider;
-
-            foreach (var newCube in newCubes)
-            {
-                newCube.Initilize(nextGeneration, nextSplitChance);
-                _colorChanger.ChangeColor(newCube.Renderer);
-                newCube.ReduceScale();
-            }
+            var newCubes = _spawner.SpawnSplittedCubes(cube);
+            _exploder.ExplodeNewCubes(newCubes, cube.transform.position);
         }
         else
         {
-            _exploder.Explode(cube.transform.position, cube.SpawnGeneration);
+            _exploder.ExplodeEverything(cube.transform.position, cube.SpawnGeneration);
         }
 
-        Destroy(cube.gameObject);
+        _spawner.DestroyCube(cube);
     }
-
 }

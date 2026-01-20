@@ -10,20 +10,19 @@ public class Raycaster : MonoBehaviour
 
     private void OnEnable()
     {
-        _inputReader.MouseButtonClicked += CastRay;
+        _inputReader.ActionPerformed += CastRay;
     }
 
     private void OnDisable()
     {
-        _inputReader.MouseButtonClicked -= CastRay;
+        _inputReader.ActionPerformed -= CastRay;
     }
 
-    private void CastRay()
+    private void CastRay(Vector2 screenPosition)
     {
-        Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
+        Ray ray = _mainCamera.ScreenPointToRay(screenPosition);
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out RaycastHit hit))
         {
             if (hit.collider.gameObject.TryGetComponent(out Cube cube))
             {

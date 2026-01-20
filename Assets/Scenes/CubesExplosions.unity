@@ -167,11 +167,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ada415e3b4101e469eac914f75c5ae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _colorChanger: {fileID: 1320797366}
   _spawner: {fileID: 706134834}
   _raycaster: {fileID: 1637632689}
   _exploder: {fileID: 1583326373}
-  _spawnPoint: {fileID: 686711936}
+  _initialSpawnPoint: {fileID: 686711936}
 --- !u!1 &686711935
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,7 +290,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c24ec339f7de0c344a1639695343724e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cube: {fileID: 6821160194283430869, guid: 78eba02adef59ed4a90380ee2b564a5a, type: 3}
+  _cubePrefab: {fileID: 6821160194283430869, guid: 78eba02adef59ed4a90380ee2b564a5a, type: 3}
+  _colorChanger: {fileID: 1320797366}
 --- !u!1 &730987085
 GameObject:
   m_ObjectHideFlags: 0
