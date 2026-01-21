@@ -4,15 +4,19 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed = 5f;
 
-    private Vector3 _moveDirection;
+    private Target _target;
 
-    public void Initialize(Vector3 direction)
+    public void Initialize(Target target)
     {
-        _moveDirection = direction.normalized;
+        _target = target;
     }
 
     private void Update()
     {
-        transform.Translate(_moveDirection * _speed * Time.deltaTime, Space.World);
+        if (_target == null) return;
+
+        Vector3 direction = (_target.transform.position - transform.position).normalized;
+        transform.Translate(direction * _speed * Time.deltaTime, Space.World);
+        transform.LookAt(_target.transform.position);
     }
 }

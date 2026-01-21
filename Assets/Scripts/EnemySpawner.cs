@@ -4,16 +4,8 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private Enemy _enemyPrefab;
-    [SerializeField] private List<Transform> _spawnPoints;
+    [SerializeField] private List<SpawnPoint> _spawnPoints;
     [SerializeField] private float _spawnDelay = 2f;
-
-    private DirectionGenerator _directionGenerator;
-
-    private void Awake()
-    {
-        _directionGenerator = new DirectionGenerator();
-    }
 
     private void Start()
     {
@@ -36,16 +28,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Spawn()
     {
-        Transform randomPoint = GetRandomSpawnPoint();
-        Vector3 direction = _directionGenerator.GetRandomHorizontalDirection();
-
-        Enemy enemy = Instantiate(_enemyPrefab, randomPoint.position, Quaternion.identity);
-        enemy.Initialize(direction);
-    }
-
-    private Transform GetRandomSpawnPoint()
-    {
         int randomIndex = Random.Range(0, _spawnPoints.Count);
-        return _spawnPoints[randomIndex];
+        _spawnPoints[randomIndex].Spawn();
     }
 }
