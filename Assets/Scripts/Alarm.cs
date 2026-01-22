@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 public class Alarm : MonoBehaviour
@@ -9,6 +10,7 @@ public class Alarm : MonoBehaviour
     private float _maxVolume = 1f;
     private float _minVolume = 0f;
     private float _targetVolume;
+    private Coroutine _volumeCoroutine;
 
     private void Awake()
     {
@@ -21,21 +23,33 @@ public class Alarm : MonoBehaviour
         _audioSource.Play();
     }
 
-    private void Update()
-    {
-        if (_audioSource.volume != _targetVolume)
-        {
-            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _targetVolume, _recoveryRate * Time.deltaTime);
-        }
-    }
-
     public void IncreaseVolume()
     {
-        _targetVolume = _maxVolume;
+        StartChangingVolume(_maxVolume);
     }
 
     public void DecreaseVolume()
     {
-        _targetVolume = _minVolume;
+        StartChangingVolume(_minVolume);
     }
+
+    private void StartChangingVolume(float targetVolume)
+    {
+        if (_volumeCoroutine != null)
+        {
+            StopCoroutine(_volumeCoroutine);
+        }
+
+        _volumeCoroutine = StartCoroutine(ChangeVolumeRoutine(targetVolume));
+    }
+
+    private IEnumerator ChangeVolumeRoutine(float targetVolume)
+    {
+        while (Mathf.Approximately(_audioSource.volume, targetVolume) == false)
+        {
+            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, targetVolume, _recoveryRate * Time.deltaTime);
+            yield return null;
+        }
+    }
+
 }

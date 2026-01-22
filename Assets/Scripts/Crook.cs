@@ -6,6 +6,7 @@ public class Crook : MonoBehaviour
     [SerializeField] private float _speed = 2f;
     [SerializeField] private float _waitDuration = 1f;
 
+    private Vector3 _flipRotation = new Vector3 (0, 180, 0);
     private float _directionX = 1f;
 
     private void Update()
@@ -13,25 +14,20 @@ public class Crook : MonoBehaviour
         Move();
     }
 
-    private void Move()
-    {
-        transform.Translate(Vector2.right * _directionX * _speed * Time.deltaTime);
-    }
-
     public void StartExitRoutine()
     {
         StartCoroutine(WaitAndFlip());
+    }
+
+    private void Move()
+    {
+        transform.Translate(Vector2.right * _directionX * _speed * Time.deltaTime);
     }
 
     private IEnumerator WaitAndFlip()
     {
         yield return new WaitForSeconds(_waitDuration);
 
-        _directionX *= -1;
-
-        Vector3 newScale = transform.localScale;
-        newScale.x *= -1;
-        transform.localScale = newScale;
-
+        transform.Rotate(_flipRotation, Space.World);
     }
 }
