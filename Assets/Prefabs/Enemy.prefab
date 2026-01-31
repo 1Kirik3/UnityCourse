@@ -13,7 +13,9 @@ GameObject:
   - component: {fileID: 7022873881268132711}
   - component: {fileID: 7286489741822991070}
   - component: {fileID: 6744143770315723982}
+  - component: {fileID: 5106842532844142001}
   - component: {fileID: 4887136384526656408}
+  - component: {fileID: 5828796059739890077}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -172,7 +174,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 253fff464c574b746a056a533f9da1e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPatrol: {fileID: 4887136384526656408}
+  _enemyAI: {fileID: 5106842532844142001}
+--- !u!114 &5106842532844142001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2420600233261218484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0087f7413587dcb498b460cad8b54198, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _viewRange: 1.75
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  _patrol: {fileID: 4887136384526656408}
 --- !u!114 &4887136384526656408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,3 +209,18 @@ MonoBehaviour:
   _waypoints:
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &5828796059739890077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2420600233261218484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00db916e6f9b25741897e176af3464dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 2
+  _damage: 1
+  _cooldown: 1

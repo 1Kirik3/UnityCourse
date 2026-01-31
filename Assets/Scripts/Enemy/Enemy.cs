@@ -4,11 +4,11 @@ namespace Assets.Scripts.Enemy
 {
     public class Enemy : MonoBehaviour
     {
-        [SerializeField] private EnemyPatrol _enemyPatrol;
+        [SerializeField] private EnemyAI _enemyAI;
 
         private void Update()
         {
-            _enemyPatrol.PatrolWaypoints();
+            _enemyAI.SimulateBehavior();
         }
 
     }

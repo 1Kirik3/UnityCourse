@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Assets.Scripts.Coin
 {
     [RequireComponent(typeof(CircleCollider2D))]
-    public class Coin : MonoBehaviour, ICollectable
+    public class Coin : MonoBehaviour, ICollectable, ISpawnable
     {
         [SerializeField] private Animator _animator;
         [SerializeField] private int _value;
