@@ -32,18 +32,7 @@ namespace Assets.Scripts.Player
             _inputReader.OnJumpPressed -= HandleJumpPressed;
         }
 
-        private void FixedUpdate()
-        {
-            HandleMovement();
-            HandleJump();
-        }
-
-        private void HandleHorizontalMovement(float input)
-        {
-            _horizontalInput = input;
-        }
-
-        private void HandleMovement()
+        public void HandleMovement()
         {
             float targetVelocityX = _horizontalInput * _movementSpeed;
             Vector2 velocity = _rigidbody.velocity;
@@ -54,6 +43,20 @@ namespace Assets.Scripts.Player
             _playerAnimation.AnimateWalking(_horizontalInput);
         }
 
+        public void HandleJump()
+        {
+            if (_isJumping)
+            {
+                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
+                _isJumping = false;
+            }
+        }
+
+        private void HandleHorizontalMovement(float input)
+        {
+            _horizontalInput = input;
+        }
+
         private void HandleJumpPressed()
         {
             if (_groundChecker.IsGrounded)
@@ -62,14 +65,7 @@ namespace Assets.Scripts.Player
             }
         }
 
-        private void HandleJump()
-        {
-            if (_isJumping)
-            {
-                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
-                _isJumping = false;
-            }
-        }
+
 
     }
 }

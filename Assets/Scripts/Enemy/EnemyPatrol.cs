@@ -13,12 +13,7 @@ namespace Assets.Scripts.Enemy
 
         private int _currentWaypointIndex = 0;
 
-        private void Update()
-        {
-            PatrolWaypoints();
-        }
-
-        private void PatrolWaypoints()
+        public void PatrolWaypoints()
         {
             if (_waypoints == null || _waypoints.Count == 0) 
                 return;
