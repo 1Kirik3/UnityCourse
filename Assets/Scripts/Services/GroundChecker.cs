@@ -11,10 +11,10 @@ namespace Assets.Scripts.Services
 
         private void FixedUpdate()
         {
-            CheckGrounded();
+            CalculateGroundStatus();
         }
 
-        private void CheckGrounded()
+        private void CalculateGroundStatus()
         {
             IsGrounded = Physics2D.OverlapCircle(transform.position, _groundCheckRadius, _groundLayer);
         }

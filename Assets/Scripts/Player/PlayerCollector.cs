@@ -15,7 +15,7 @@ namespace Assets.Scripts.Player
 
             if (collision.TryGetComponent(out ICollectable collectable))
             {
-                collectable.Collect(_pocket);
+                collectable.Collect(this);
             }
         }
     }

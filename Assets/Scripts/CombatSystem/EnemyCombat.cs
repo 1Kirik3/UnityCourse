@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Interfaces;
 using UnityEngine;
 
-namespace Assets.Scripts.CombatSystem
+namespace Assets.Scripts.Enemy
 {
     public class EnemyCombat : MonoBehaviour
     {

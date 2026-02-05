@@ -11,7 +11,13 @@ namespace Assets.Scripts.Enemy
 
         [SerializeField] private List<Transform> _waypoints = new List<Transform>();
 
+        private float _sqrArrivalDistance = 0;
         private int _currentWaypointIndex = 0;
+
+        private void Start()
+        {
+            _sqrArrivalDistance = _arrivalDistance * _arrivalDistance;
+        }
 
         public void PatrolWaypoints()
         {
@@ -22,7 +28,9 @@ namespace Assets.Scripts.Enemy
             transform.position = Vector2.MoveTowards(transform.position, target.position, _speed * Time.deltaTime);
             float directionX = target.position.x - transform.position.x;
 
-            if (Vector2.Distance(transform.position, target.position) < _arrivalDistance)
+            Vector2 diff = (Vector2)target.position - (Vector2)transform.position;
+
+            if (diff.sqrMagnitude < _sqrArrivalDistance)
             {
                 _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Count;
             }

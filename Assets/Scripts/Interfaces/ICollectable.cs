@@ -4,7 +4,7 @@ namespace Assets.Scripts.Interfaces
 {
     public interface ICollectable
     {
-        public void Collect(PlayerPocket pocket);
+        public void Collect(PlayerCollector collector);
     }
 }
 

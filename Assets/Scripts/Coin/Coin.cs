@@ -12,14 +12,17 @@ namespace Assets.Scripts.Coin
 
         private bool _isCollected = false;
 
-        public void Collect(PlayerPocket pocket)
+        public void Collect(PlayerCollector collector)
         {
-            if (_isCollected)
-                return;
+            if (collector.TryGetComponent(out PlayerPocket pocket))
+            {
+                if (_isCollected)
+                    return;
 
-            _isCollected = true;
-            pocket.InreaseCoinsValue(_value);
-            _animator.SetTrigger(CoinAnimatorData.CoinCollected);
+                _isCollected = true;
+                pocket.InreaseCoinsValue(_value);
+                _animator.SetTrigger(CoinAnimatorData.CoinCollected);
+            }
 
         }
 

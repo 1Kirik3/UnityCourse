@@ -1,3 +1,4 @@
+using Assets.Scripts.CombatSystem;
 using Assets.Scripts.Interfaces;
 using Assets.Scripts.Player;
 using UnityEngine;
@@ -8,11 +9,11 @@ namespace Assets.Scripts.FirstAidKid
     {
         [SerializeField] private int _healAmount = 1;
 
-        public void Collect(PlayerPocket pocket)
+        public void Collect(PlayerCollector collector)
         {
-            if (pocket.TryGetComponent(out PlayerCombat playerCombat))
+            if (collector.TryGetComponent(out Health health))
             {
-                playerCombat.Heal(_healAmount);
+                health.Heal(_healAmount);
                 Destroy(gameObject);
             }
         }

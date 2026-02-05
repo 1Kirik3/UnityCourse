@@ -22,14 +22,14 @@ namespace Assets.Scripts.Player
 
         private void OnEnable()
         {
-            _inputReader.OnHorizontalMovement += HandleHorizontalMovement;
-            _inputReader.OnJumpPressed += HandleJumpPressed;
+            _inputReader.HorizontalMovementPressed += HandleHorizontalMovement;
+            _inputReader.JumpPressed += HandleJumpPressed;
         }
 
         private void OnDisable()
         {
-            _inputReader.OnHorizontalMovement -= HandleHorizontalMovement;
-            _inputReader.OnJumpPressed -= HandleJumpPressed;
+            _inputReader.HorizontalMovementPressed -= HandleHorizontalMovement;
+            _inputReader.JumpPressed -= HandleJumpPressed;
         }
 
         public void HandleMovement()
@@ -39,7 +39,7 @@ namespace Assets.Scripts.Player
             velocity.x = Mathf.Lerp(velocity.x, targetVelocityX, Time.fixedDeltaTime * 10f);
             _rigidbody.velocity = velocity;
 
-            _playerAnimation.RotatePlayer(transform, _horizontalInput);
+            Rotator.RotatePlayer(transform, _horizontalInput);
             _playerAnimation.AnimateWalking(_horizontalInput);
         }
 
