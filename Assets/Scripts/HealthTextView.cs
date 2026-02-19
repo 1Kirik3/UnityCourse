@@ -7,6 +7,6 @@ public class HealthTextView : HealthView
 
     protected override void OnStateChanged()
     {
-        _text.text = $"{ViewModel.Current} / {ViewModel.Max}";
+        _text.text = $"{_health.Current} / {_health.Max}";
     }
 }

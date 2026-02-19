@@ -1,27 +1,7 @@
-using UnityEngine;
-using UnityEngine.UI;
-
-[RequireComponent(typeof(Button))]
-public class HealButtonView : MonoBehaviour
+public class HealButtonView : ActionButtonView
 {
-    [SerializeField] private float _healAmount = 10f;
-    [SerializeField] private Button _button;
-
-    private HealthViewModel _viewModel;
-
-    public void Initialize(HealthViewModel viewModel)
+    protected override void HandleClick()
     {
-        _viewModel = viewModel;
-        _button.onClick.AddListener(OnButtonClick);
-    }
-
-    private void OnButtonClick()
-    {
-        _viewModel.ApplyHeal(_healAmount);
-    }
-
-    private void OnDestroy()
-    {
-        _button?.onClick.RemoveListener(OnButtonClick);
+        _health.Heal(_amount);
     }
 }

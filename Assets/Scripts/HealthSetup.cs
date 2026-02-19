@@ -13,13 +13,11 @@ public class HealthSetup : MonoBehaviour
 
     private void Start()
     {
-        var viewModel = new HealthViewModel(_playerHealth);
+        _textView.Initialize(_playerHealth);
+        _simpleSliderView.Initialize(_playerHealth);
+        _smoothSliderView.Initialize(_playerHealth);
 
-        _textView.Initialize(viewModel);
-        _simpleSliderView.Initialize(viewModel);
-        _smoothSliderView.Initialize(viewModel);
-
-        _damageButton.Initialize(viewModel);
-        _healButton.Initialize(viewModel);
+        _damageButton.Initialize(_playerHealth);
+        _healButton.Initialize(_playerHealth);
     }
 }

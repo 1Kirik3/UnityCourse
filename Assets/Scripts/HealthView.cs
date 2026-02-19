@@ -2,19 +2,19 @@ using UnityEngine;
 
 public abstract class HealthView : MonoBehaviour
 {
-    protected HealthViewModel ViewModel;
+    protected Health _health;
 
-    public void Initialize(HealthViewModel viewModel)
+    public virtual void Initialize(Health health)
     {
-        ViewModel = viewModel;
-        ViewModel.StateChanged += OnStateChanged;
+        _health = health;
+        _health.Changed += OnStateChanged;
         OnStateChanged();
     }
 
-    private void OnDestroy()
+    protected virtual void OnDisable()
     {
-        if (ViewModel != null)
-            ViewModel.StateChanged -= OnStateChanged;
+        if (_health != null)
+            _health.Changed -= OnStateChanged;
     }
 
     protected abstract void OnStateChanged();

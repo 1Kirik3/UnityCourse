@@ -1,20 +1,31 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System.Collections;
+using UnityEngine;
 
-public class HealthSmoothSliderView : HealthView
+public class HealthSmoothSliderView : HealthSimpleSliderView
 {
-    [SerializeField] private Slider _slider;
-    [SerializeField] private float _speed = 2f;
-
-    private float _targetValue;
+    [SerializeField] private float _duration = 0.5f;
+    private Coroutine _updateCoroutine;
 
     protected override void OnStateChanged()
     {
-        _targetValue = ViewModel.NormalizedValue;
+        if (_updateCoroutine != null)
+            StopCoroutine(_updateCoroutine);
+
+        _updateCoroutine = StartCoroutine(AnimateSlider(_health.Current / _health.Max));
     }
 
-    private void Update()
+    private IEnumerator AnimateSlider(float targetValue)
     {
-        _slider.value = Mathf.MoveTowards(_slider.value, _targetValue, _speed * Time.deltaTime);
+        float startValue = _slider.value;
+        float elapsed = 0f;
+
+        while (elapsed < _duration)
+        {
+            elapsed += Time.deltaTime;
+            _slider.value = Mathf.Lerp(startValue, targetValue, elapsed / _duration);
+            yield return null;
+        }
+
+        _slider.value = targetValue;
     }
 }
