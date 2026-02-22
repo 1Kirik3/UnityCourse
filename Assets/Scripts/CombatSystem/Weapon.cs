@@ -12,7 +12,6 @@ namespace Assets.Scripts.CombatSystem
         {
             if (collision.gameObject.TryGetComponent(out IDamageable target))
             {
-                Debug.Log("Deal damage");
                 target.TakeDamage(_damage);
             }
         }
