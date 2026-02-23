@@ -6,9 +6,8 @@ namespace Assets.Scripts.HealthPackage.Health
 {
     public class Health : MonoBehaviour, IDamageable
     {
-        [field: SerializeField] public float Max { get; private set; } = 3f;
-
         public event Action Changed;
+        [field: SerializeField] public float Max { get; private set; } = 3f;
         public float Current { get; private set; }
         public bool IsDead { get; private set; }
 
