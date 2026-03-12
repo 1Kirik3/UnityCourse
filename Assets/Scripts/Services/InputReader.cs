@@ -8,16 +8,19 @@ namespace Assets.Scripts.Services
         private const string HorizontalAxis = "Horizontal";
         private const KeyCode JumpKey = KeyCode.Space;
         private const KeyCode AttackKey = KeyCode.F;
+        private const KeyCode VampirismKey = KeyCode.E;
 
         public event Action<float> HorizontalMovementPressed;
         public event Action JumpPressed;
         public event Action AttackPressed;
+        public event Action VampirismPressed;
 
         private void Update()
         {
             HandleHorizontalInput();
             HandleJump();
             HandleAttack();
+            HandleVampirism();
         }
 
         private void HandleHorizontalInput()
@@ -36,6 +39,12 @@ namespace Assets.Scripts.Services
         {
             if (Input.GetKeyDown(AttackKey))
                 AttackPressed?.Invoke();
+        }
+
+        private void HandleVampirism()
+        {
+            if (Input.GetKeyDown(VampirismKey))
+                VampirismPressed?.Invoke();
         }
 
     }
