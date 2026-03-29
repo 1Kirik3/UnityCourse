@@ -1,13 +1,9 @@
 ﻿using Assets.Scripts.Core;
-using Assets.Scripts.Interfaces;
-using UnityEngine;
 
 namespace Assets.Scripts.UI
 {
-    public class CubeSpawnerStatView : SpawnerStatViewBase
+    public class CubeSpawnerStatView : SpawnerStatViewBase<CubeSpawner>
     {
-        [SerializeField] private CubeSpawner _spawner;
 
-        protected override IStatProvider GetSpawner() => _spawner;
     }
 }

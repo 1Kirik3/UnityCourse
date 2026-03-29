@@ -7,19 +7,20 @@ namespace Assets.Scripts.Core
     [RequireComponent(typeof(Renderer), typeof(Rigidbody))]
     public class Bomb : MonoBehaviour, IPoolable
     {
-        private Renderer _renderer;
         private Exploder _exploder;
 
         public event Action<Bomb> Expired;
 
+        [field: SerializeField] public Renderer Renderer {  get; private set; }
+
         public void Initialize(Exploder exploder)
         {
             _exploder = exploder;
-            _exploder.OnExploded += OnExploded;
         }
 
         public void Activate()
         {
+            _exploder.OnExploded += OnExploded;
             _exploder.Explode(transform.position);
         }
 
@@ -35,8 +36,8 @@ namespace Assets.Scripts.Core
 
             StopAllCoroutines();
 
-            if (_renderer != null)
-                _renderer.material.color = Color.white;
+            if (Renderer != null)
+                Renderer.material.color = Color.white;
         }
 
         private void OnDestroy()

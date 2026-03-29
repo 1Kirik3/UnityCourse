@@ -5,22 +5,12 @@ namespace Assets.Scripts.Core
 {
     public class BombFactory : MonoBehaviour
     {
-        private readonly Bomb _prefab;
-        private readonly ExploderConfig _exploderConfig;
+        [SerializeField] private ExploderConfig _exploderConfig;
 
-        public BombFactory(Bomb prefab, ExploderConfig exploderConfig)
+        public void Setup(Bomb bomb)
         {
-            _prefab = prefab;
-            _exploderConfig = exploderConfig;
-        }
-
-        public Bomb Create()
-        {
-            Bomb bomb = Instantiate(_prefab);
-            Renderer renderer = bomb.GetComponent<Renderer>();
-            Exploder exploder = new Exploder(_exploderConfig, bomb, renderer);
+            Exploder exploder = new Exploder(_exploderConfig, bomb, bomb.Renderer);
             bomb.Initialize(exploder);
-            return bomb;
         }
     }
 }

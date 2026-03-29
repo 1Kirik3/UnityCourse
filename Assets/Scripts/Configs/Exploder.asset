@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e296df45abf55b346b1fd32df419da0f, type: 3}
-  m_Name: Exppoder
+  m_Name: Exploder
   m_EditorClassIdentifier: 
   _explosionRadius: 5
   _explosionForce: 700

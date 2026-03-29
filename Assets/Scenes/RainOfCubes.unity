@@ -301,9 +301,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0a21ec9833a91d49af6557c5f1a830d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawner: {fileID: 1121279705}
   _label: Bombs
   _displayTile: {fileID: 226049408}
-  _spawner: {fileID: 1121279705}
 --- !u!1 &231784578
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,6 +815,7 @@ MonoBehaviour:
   _defaultCapacity: 10
   _maxSize: 20
   _exploderConfig: {fileID: 11400000, guid: 1423171030618ba4285abbdd7b2e565b, type: 2}
+  _factory: {fileID: 1121279707}
 --- !u!4 &1121279706
 Transform:
   m_ObjectHideFlags: 0
@@ -842,6 +843,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a97bda27cfd6036449b0952381184366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _prefab: {fileID: 6618122664352861007, guid: c30a470dbd2f3724b818c9b38bcd7479, type: 3}
+  _exploderConfig: {fileID: 11400000, guid: 1423171030618ba4285abbdd7b2e565b, type: 2}
 --- !u!1 &1381633569
 GameObject:
   m_ObjectHideFlags: 0
@@ -1335,9 +1338,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df64871bf3f887f4eb72cf2407128f50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawner: {fileID: 274600346}
   _label: cubes
   _displayTile: {fileID: 1522243758}
-  _spawner: {fileID: 274600346}
 --- !u!1 &1695162640
 GameObject:
   m_ObjectHideFlags: 0

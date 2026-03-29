@@ -7,20 +7,22 @@ namespace Assets.Scripts.Core
     {
         [Header("Bomb Factory Config")]
         [SerializeField] private ExploderConfig _exploderConfig;
-
-        private BombFactory _factory;
+        [SerializeField] private BombFactory _factory;
 
         protected override void Awake()
         {
-            _factory = new BombFactory(_prefab, _exploderConfig);
             base.Awake();
         }
 
         protected override Bomb CreateObject()
         {
+            Bomb bomb = Instantiate(_prefab);
+            _factory.Setup(bomb);
+
             TotalCreated++;
             RaiseStatsChanged();
-            return _factory.Create();
+
+            return bomb;
         }
     }
 }

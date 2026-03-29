@@ -146,7 +146,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff23181076d9bed479016bb729670e3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _explosionRadius: 5
-  _explosionForce: 700
-  _minDetonationTime: 2
-  _maxDetonationTime: 5
+  <Renderer>k__BackingField: {fileID: 9203295961905708735}

@@ -4,38 +4,40 @@ using UnityEngine;
 
 namespace Assets.Scripts.UI
 {
-    public abstract class SpawnerStatViewBase : MonoBehaviour
+    public abstract class SpawnerStatViewBase<TSpawner> : MonoBehaviour where TSpawner : MonoBehaviour, IStatProvider
     {
+        [SerializeField] private TSpawner _spawner;
+
         [SerializeField] protected string _label;
         [SerializeField] protected TMP_Text _displayTile;
 
-        protected abstract IStatProvider GetSpawner();
+        protected virtual IStatProvider GetSpawner() => _spawner;
 
         protected virtual void Start()
         {
-            var spawner = GetSpawner();
-            if (spawner != null)
-                spawner.OnStatsChanged += UpdateDisplay;
-
+            _spawner.OnStatsChanged += UpdateDisplay;
             UpdateDisplay();
+        }
+
+        private void OnValidate()
+        {
+            if (_spawner == null || _displayTile == null)
+            {
+                Debug.LogError("Spawner or display ate not found");
+            }
         }
 
         private void UpdateDisplay()
         {
-            var spawner = GetSpawner();
-            if (_displayTile == null || spawner == null) return;
-
             _displayTile.text = $"{_label}\n" +
-                                $"Spawned: {spawner.TotalSpawned}\n" +
-                                $"Created: {spawner.TotalCreated}\n" +
-                                $"Active: {spawner.ActiveCount}";
+                                $"Spawned: {_spawner.TotalSpawned}\n" +
+                                $"Created: {_spawner.TotalCreated}\n" +
+                                $"Active: {_spawner.ActiveCount}";
         }
 
         protected virtual void OnDestroy()
         {
-            var spawner = GetSpawner();
-            if (spawner != null)
-                spawner.OnStatsChanged -= UpdateDisplay;
+            _spawner.OnStatsChanged -= UpdateDisplay;
         }
     }
 }
