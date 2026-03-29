@@ -1,3 +1,4 @@
+using Assets.Scripts.Interfaces;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 namespace Assets.Scripts.Core
 {
     [RequireComponent(typeof(Renderer), typeof(Rigidbody))]
-    public class Cube : MonoBehaviour
+    public class Cube : MonoBehaviour, IPoolable
     {
         [Header("Settings")]
         [SerializeField] private float _minLifeTime = 2f;
@@ -31,7 +32,7 @@ namespace Assets.Scripts.Core
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (_hasCollided == false && collision.gameObject.TryGetComponent(out Platfrom platform))
+            if (_hasCollided == false && collision.gameObject.TryGetComponent(out Platform platform))
             {
                 _hasCollided = true;
                 _renderer.material.color = UnityEngine.Random.ColorHSV();
@@ -42,6 +43,7 @@ namespace Assets.Scripts.Core
         private IEnumerator WaitAndExpire()
         {
             float lifeTime = UnityEngine.Random.Range(_minLifeTime, _maxLifeTime);
+
             yield return new WaitForSeconds(lifeTime);
 
             Expired?.Invoke(this);

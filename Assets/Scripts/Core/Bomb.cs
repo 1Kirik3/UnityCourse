@@ -1,52 +1,48 @@
-﻿using System;
-using System.Collections;
+﻿using Assets.Scripts.Interfaces;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Core
 {
     [RequireComponent(typeof(Renderer), typeof(Rigidbody))]
-    public class Bomb : MonoBehaviour
+    public class Bomb : MonoBehaviour, IPoolable
     {
-        [Header("Explosion Settings")]
-        [SerializeField] private float _explosionRadius = 5f;
-        [SerializeField] private float _explosionForce = 700f;
-        [SerializeField] private float _minDetonationTime = 2f;
-        [SerializeField] private float _maxDetonationTime = 5f;
-
         private Renderer _renderer;
+        private Exploder _exploder;
+
         public event Action<Bomb> Expired;
 
-        private void Awake() => _renderer = GetComponent<Renderer>();
-
-        public void Activate() => StartCoroutine(FadeAndExplode());
-
-        private IEnumerator FadeAndExplode()
+        public void Initialize(Exploder exploder)
         {
-            float duration = UnityEngine.Random.Range(_minDetonationTime, _maxDetonationTime);
-            float elapsed = 0;
-            Color color = Color.black;
+            _exploder = exploder;
+            _exploder.OnExploded += OnExploded;
+        }
 
-            while (elapsed < duration)
-            {
-                elapsed += Time.deltaTime;
-                color.a = Mathf.Lerp(1f, 0f, elapsed / duration);
-                _renderer.material.color = color;
-                yield return null;
-            }
+        public void Activate()
+        {
+            _exploder.Explode(transform.position);
+        }
 
-            Explode();
+        private void OnExploded(Exploder exploder)
+        {
             Expired?.Invoke(this);
         }
 
-        private void Explode()
+        public void ResetState()
         {
-            Collider[] targets = Physics.OverlapSphere(transform.position, _explosionRadius);
+            if (_exploder != null)
+                _exploder.OnExploded -= OnExploded;
 
-            foreach (var target in targets)
-            {
-                if (target.TryGetComponent(out Rigidbody rb))
-                    rb.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
-            }
+            StopAllCoroutines();
+
+            if (_renderer != null)
+                _renderer.material.color = Color.white;
+        }
+
+        private void OnDestroy()
+        {
+            if (_exploder != null)
+                _exploder.OnExploded -= OnExploded;
         }
     }
 }

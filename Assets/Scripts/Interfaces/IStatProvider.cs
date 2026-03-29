@@ -6,5 +6,8 @@ namespace Assets.Scripts.Interfaces
         int TotalSpawned { get; }
         int TotalCreated { get; }
         int ActiveCount { get; }
+
+        event System.Action OnStatsChanged;
+
     }
 }

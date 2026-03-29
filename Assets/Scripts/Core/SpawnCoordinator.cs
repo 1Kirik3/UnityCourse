@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Core
 {
-    public class LifeCycleManager : MonoBehaviour
+    public class SpawnCoordinator : MonoBehaviour
     {
         [Header("Spawners")]
         [SerializeField] private CubeSpawner _cubeSpawner;
