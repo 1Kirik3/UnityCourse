@@ -10,6 +10,7 @@ namespace Assets.Scripts.Bird
         [SerializeField] private InputHandler _input;
         [SerializeField] private BulletPool _bulletPool;
         [SerializeField] private Transform _shootPoint;
+        [SerializeField] private float _bulletOffset = 0.5f;
 
         private Bird _bird;
 
@@ -32,16 +33,30 @@ namespace Assets.Scripts.Bird
 
         private void OnShoot()
         {
+            if (_bulletPool == null)
+            {
+                Debug.LogError("BulletPool is not assigned!");
+                return;
+            }
+
             Bullet bullet = _bulletPool.GetObject();
+
+            if (bullet == null)
+            {
+                Debug.LogError("Failed to get bullet from pool!");
+                return;
+            }
+
             Vector2 shootDirection = _bird.transform.right;
+            Vector2 spawnPosition;
 
             if (_shootPoint != null)
-                bullet.transform.position = _shootPoint.position;
+                spawnPosition = (Vector2)_shootPoint.position + shootDirection * _bulletOffset;
             else
-                bullet.transform.position = _bird.transform.position;
+                spawnPosition = (Vector2)_bird.transform.position + shootDirection * _bulletOffset;
 
+            bullet.transform.position = spawnPosition;
             bullet.Initialize(shootDirection, true, _bulletPool);
-            bullet.gameObject.SetActive(true);
         }
     }
 }

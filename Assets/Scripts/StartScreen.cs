@@ -6,13 +6,13 @@ public class StartScreen : Window
 
     public override void Close()
     {
-        WindowGroup.alpha = 0f;
+        gameObject.SetActive(false);
         ActionButton.interactable = false;
     }
 
     public override void Open()
     {
-        WindowGroup.alpha = 1f;
+        gameObject.SetActive(true);
         ActionButton.interactable = true;
     }
 

@@ -1,3 +1,7 @@
-public interface IInteractable
+namespace Assets.Scripts
 {
+    public interface IInteractable
+    {
+    }
 }
+

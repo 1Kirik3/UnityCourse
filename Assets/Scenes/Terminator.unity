@@ -346,6 +346,7 @@ MonoBehaviour:
   _input: {fileID: 2116198509}
   _bulletPool: {fileID: 1906321688}
   _shootPoint: {fileID: 2066632873}
+  _bulletOffset: 0.5
 --- !u!114 &40215285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,10 +398,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08a9b5bcbb32a35499357ac0ebdcd67d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rb: {fileID: 40215289}
   _tapForce: 5
   _speed: 2
   _rotationSpeed: 5
-  _maxRotationZ: 30
+  _maxRotationZ: 60
   _minRotationZ: -60
 --- !u!50 &40215289
 Rigidbody2D:
@@ -539,12 +541,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 193585004}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.33, y: 0.41, z: 3.9145827}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.33, y: 0.41, z: 13.914583}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 407347491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &407347488
 GameObject:
@@ -557,6 +559,7 @@ GameObject:
   - component: {fileID: 407347491}
   - component: {fileID: 407347490}
   - component: {fileID: 407347489}
+  - component: {fileID: 407347492}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -631,13 +634,31 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 407347488}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.18, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 193585006}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &407347492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407347488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bc8b6c430644fa4ca8c4abba132e9cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 40215291}
+  _smoothSpeed: 0.125
+  _offsetZ: -10
+  _fixedY: 0
+  _cameraOffsetX: 6
 --- !u!1 &422602779
 GameObject:
   m_ObjectHideFlags: 0
@@ -1072,12 +1093,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 631668639}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.44, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -9.93, y: -1.3464426, z: 3.9821484}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1906321689}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &631668641
 MonoBehaviour:
@@ -1592,8 +1613,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1013969420}
   - {fileID: 583310302}
+  - {fileID: 1013969420}
   - {fileID: 1903045015}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1978,7 +1999,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: 857920064106707652, guid: e361d2550471def4da25c33b93b90114, type: 3}
-  _container: {fileID: 0}
+  _initialPoolSize: 10
+  _container: {fileID: 1176814924}
 --- !u!4 &1906321689
 Transform:
   m_ObjectHideFlags: 0
@@ -1993,7 +2015,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1176814924}
-  - {fileID: 631668640}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2066632872
@@ -2021,7 +2042,7 @@ Transform:
   m_GameObject: {fileID: 2066632872}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.47, y: 0, z: 0}
+  m_LocalPosition: {x: 0.666, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2085,22 +2106,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bird: {fileID: 40215285}
+  _camera: {fileID: 407347492}
   _input: {fileID: 2116198509}
   _birdMover: {fileID: 40215288}
   _enemySpawner: {fileID: 193585005}
   _startScreen: {fileID: 1013969421}
   _endGameScreen: {fileID: 583310303}
   _scoreCounter: {fileID: 40215287}
+  _bulletPool: {fileID: 1906321688}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 407347491}
   - {fileID: 1613030}
   - {fileID: 2116198508}
+  - {fileID: 407347491}
   - {fileID: 40215291}
+  - {fileID: 631668640}
   - {fileID: 1906321689}
   - {fileID: 1191538504}
-  - {fileID: 193585006}
   - {fileID: 1242377023}
   - {fileID: 730962234}

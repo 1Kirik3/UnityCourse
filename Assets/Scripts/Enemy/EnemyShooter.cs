@@ -8,22 +8,40 @@ namespace Assets.Scripts.Enemy
     {
         [SerializeField] private float _shootDelay;
         private BulletPool _bulletPool;
+        private Coroutine _shootCoroutine;
+        private bool _isShooting;
 
         public void Init(BulletPool bulletPool)
         {
             _bulletPool = bulletPool;
         }
 
-        private void Start()
+        public void StartShooting()
         {
-            StartCoroutine(ShootRoutine());
+            if (_isShooting) return;
+
+            _isShooting = true;
+            _shootCoroutine = StartCoroutine(ShootRoutine());
+        }
+
+        public void StopShooting()
+        {
+            if (!_isShooting) return;
+
+            _isShooting = false;
+
+            if (_shootCoroutine != null)
+            {
+                StopCoroutine(_shootCoroutine);
+                _shootCoroutine = null;
+            }
         }
 
         private IEnumerator ShootRoutine()
         {
             var wait = new WaitForSeconds(_shootDelay);
 
-            while (enabled)
+            while (_isShooting)
             {
                 yield return wait;
                 Shoot();
@@ -32,13 +50,18 @@ namespace Assets.Scripts.Enemy
 
         private void Shoot()
         {
-            if (_bulletPool == null) 
+            if (_bulletPool == null)
                 return;
 
             Bullet bullet = _bulletPool.GetObject();
             bullet.transform.position = transform.position;
             bullet.Initialize(Vector2.left, false, _bulletPool);
             bullet.gameObject.SetActive(true);
+        }
+
+        private void OnDisable()
+        {
+            StopShooting();
         }
     }
 }

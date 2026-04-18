@@ -14,16 +14,52 @@ namespace Assets.Scripts.Enemy
         [SerializeField] private EnemyPool _pool;
         [SerializeField] private BulletPool _bulletPool;
 
+        private Coroutine _spawnCoroutine;
+        private bool _isSpawning;
+
         private void Start()
         {
-            StartCoroutine(SpawnRoutine());
+            StartSpawning();
+        }
+
+        public void StartSpawning()
+        {
+            if (_isSpawning) return;
+
+            _isSpawning = true;
+            _spawnCoroutine = StartCoroutine(SpawnRoutine());
+        }
+
+        public void StopSpawning()
+        {
+            if (!_isSpawning) return;
+
+            _isSpawning = false;
+
+            if (_spawnCoroutine != null)
+            {
+                StopCoroutine(_spawnCoroutine);
+                _spawnCoroutine = null;
+            }
+        }
+
+        public void Reset()
+        {
+            StopSpawning();
+
+            if (_pool != null)
+            {
+                _pool.Reset();
+            }
+
+            StartSpawning();
         }
 
         private IEnumerator SpawnRoutine()
         {
             var wait = new WaitForSeconds(_delay);
 
-            while (enabled)
+            while (_isSpawning)
             {
                 Spawn();
                 yield return wait;

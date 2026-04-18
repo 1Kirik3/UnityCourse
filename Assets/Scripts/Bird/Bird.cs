@@ -8,7 +8,7 @@ namespace Assets.Scripts.Bird
     [RequireComponent(typeof(BirdMover))]
     [RequireComponent(typeof(ScoreCounter))]
     [RequireComponent(typeof(BirdCollisionHandler))]
-    public class Bird : MonoBehaviour
+    public class Bird : MonoBehaviour, IDamageable
     {
         [SerializeField] private BirdMover _birdMover;
         [SerializeField] private ScoreCounter _scoreCounter;
@@ -32,7 +32,7 @@ namespace Assets.Scripts.Bird
             _birdMover.Reset();
         }
 
-        public void Die()
+        public void TakeDamage()
         {
             GameOver?.Invoke();
         }

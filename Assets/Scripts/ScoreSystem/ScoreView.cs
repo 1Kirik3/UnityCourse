@@ -22,6 +22,7 @@ namespace Assets.Scripts.ScoreSystem
         {
             _score.text = score.ToString();
         }
+
     }
 }
 

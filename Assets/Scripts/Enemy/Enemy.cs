@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Enemy
 {
-    public class Enemy : MonoBehaviour, IInteractable
+    public class Enemy : MonoBehaviour, IInteractable, IDamageable
     {
         public event Action<Enemy> Died;
         private EnemyShooter _shooter;
@@ -25,22 +25,34 @@ namespace Assets.Scripts.Enemy
             gameObject.SetActive(true);
 
             if (_shooter != null)
-                _shooter.enabled = true;
+                _shooter.StartShooting();
+        }
+
+        public void Deactivate()
+        {
+            if (_shooter != null)
+                _shooter.StopShooting();
+
+            gameObject.SetActive(false);
+        }
+
+        public void TakeDamage()
+        {
+            Die();
         }
 
         public void Die()
         {
             Died?.Invoke(this);
-            gameObject.SetActive(false);
+            Deactivate();
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.TryGetComponent(out Bird.Bird bird))
             {
-                bird.Die();
+                bird.TakeDamage();
             }
         }
     }
 }
-
