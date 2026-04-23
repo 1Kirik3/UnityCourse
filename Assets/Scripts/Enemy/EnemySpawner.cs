@@ -8,6 +8,7 @@ namespace Assets.Scripts.Enemy
     public class EnemySpawner : MonoBehaviour
     {
         public event Action<Enemy> EnemySpawned;
+
         [SerializeField] private float _delay;
         [SerializeField] private float _lowerBound;
         [SerializeField] private float _upperBound;

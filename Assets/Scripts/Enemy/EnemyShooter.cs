@@ -7,6 +7,7 @@ namespace Assets.Scripts.Enemy
     public class EnemyShooter : MonoBehaviour
     {
         [SerializeField] private float _shootDelay;
+        [SerializeField] private LayerMask _bulletLayer;
         private BulletPool _bulletPool;
         private Coroutine _shootCoroutine;
         private bool _isShooting;
@@ -55,7 +56,8 @@ namespace Assets.Scripts.Enemy
 
             Bullet bullet = _bulletPool.GetObject();
             bullet.transform.position = transform.position;
-            bullet.Initialize(Vector2.left, false, _bulletPool);
+            int layerIndex = (int)Mathf.Log(_bulletLayer.value, 2);
+            bullet.Initialize(Vector2.left, layerIndex);
             bullet.gameObject.SetActive(true);
         }
 

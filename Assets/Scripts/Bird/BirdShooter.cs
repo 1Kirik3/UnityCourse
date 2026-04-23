@@ -10,6 +10,8 @@ namespace Assets.Scripts.Bird
         [SerializeField] private InputHandler _input;
         [SerializeField] private BulletPool _bulletPool;
         [SerializeField] private Transform _shootPoint;
+        [SerializeField] private LayerMask _bulletLayer;
+
         [SerializeField] private float _bulletOffset = 0.5f;
 
         private Bird _bird;
@@ -56,7 +58,8 @@ namespace Assets.Scripts.Bird
                 spawnPosition = (Vector2)_bird.transform.position + shootDirection * _bulletOffset;
 
             bullet.transform.position = spawnPosition;
-            bullet.Initialize(shootDirection, true, _bulletPool);
+            int layerIndex = (int)Mathf.Log(_bulletLayer.value, 2);
+            bullet.Initialize(shootDirection, layerIndex);
         }
     }
 }

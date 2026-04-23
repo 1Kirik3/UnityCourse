@@ -7,6 +7,7 @@ namespace Assets.Scripts.Enemy
     public class Enemy : MonoBehaviour, IInteractable, IDamageable
     {
         public event Action<Enemy> Died;
+
         private EnemyShooter _shooter;
 
         private void Awake()

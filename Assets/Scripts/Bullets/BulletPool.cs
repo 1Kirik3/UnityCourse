@@ -37,7 +37,6 @@ namespace Assets.Scripts.Bullets
         {
             Bullet bullet = Instantiate(_prefab, _container);
             bullet.gameObject.SetActive(false);
-            bullet.InitializePoolReference(this);
             _pool.Enqueue(bullet);
             _allBullets.Add(bullet);
         }
@@ -56,7 +55,7 @@ namespace Assets.Scripts.Bullets
 
         public void PutObject(Bullet bullet)
         {
-            if (bullet == null) 
+            if (bullet == null)
                 return;
 
             bullet.ResetBullet();
@@ -68,7 +67,6 @@ namespace Assets.Scripts.Bullets
 
         public void Reset()
         {
-            // Возвращаем все активные пули в пул
             foreach (var bullet in _allBullets)
             {
                 if (bullet != null && bullet.gameObject.activeSelf)
@@ -77,7 +75,6 @@ namespace Assets.Scripts.Bullets
                     bullet.gameObject.SetActive(false);
                     bullet.transform.SetParent(_container);
                     bullet.transform.position = Vector3.zero;
-                    _pool.Enqueue(bullet);
                 }
             }
 
@@ -85,7 +82,8 @@ namespace Assets.Scripts.Bullets
 
             foreach (var bullet in _allBullets)
             {
-                _pool.Enqueue(bullet);
+                if (bullet != null)
+                    _pool.Enqueue(bullet);
             }
         }
 

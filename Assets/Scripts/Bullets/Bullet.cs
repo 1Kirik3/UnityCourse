@@ -7,11 +7,9 @@ namespace Assets.Scripts.Bullets
         [SerializeField] private float _speed = 10f;
 
         private Vector2 _direction;
-        private bool _isPlayerBullet;
-        private BulletPool _pool;
+        private bool _isInitialized;
         private Rigidbody2D _rb;
         private Collider2D _collider;
-        private bool _isInitialized;
 
         private void Awake()
         {
@@ -38,17 +36,11 @@ namespace Assets.Scripts.Bullets
             }
         }
 
-        public void InitializePoolReference(BulletPool pool)
-        {
-            _pool = pool;
-        }
-
-        public void Initialize(Vector2 direction, bool isPlayerBullet, BulletPool pool)
+        public void Initialize(Vector2 direction, int layerIndex)
         {
             _direction = direction.normalized;
-            _isPlayerBullet = isPlayerBullet;
-            _pool = pool;
             _isInitialized = true;
+            gameObject.layer = layerIndex;
 
             ResetPhysics();
             RotateToDirection();
@@ -74,7 +66,6 @@ namespace Assets.Scripts.Bullets
         {
             _isInitialized = false;
             _direction = Vector2.zero;
-            _isPlayerBullet = false;
 
             if (_rb != null)
             {
@@ -107,88 +98,19 @@ namespace Assets.Scripts.Bullets
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (!CanInteract())
+            if (!_isInitialized)
                 return;
 
-            if (TryHandleBulletCollision(other))
-                return;
-
-            if (TryHandleBulletRemover(other))
-                return;
-
-            TryHandleDamage(other);
-        }
-
-        private bool CanInteract()
-        {
-            return _isInitialized;
-        }
-
-        private bool TryHandleBulletCollision(Collider2D other)
-        {
-            if (other.TryGetComponent(out Bullet otherBullet))
-            {
-                if (otherBullet._isPlayerBullet != _isPlayerBullet)
-                {
-                    otherBullet.ReturnToPool();
-                    ReturnToPool();
-                }
-
-                return true;
-            }
-
-            return false;
-        }
-
-        private bool TryHandleBulletRemover(Collider2D other)
-        {
-            if (other.TryGetComponent(out BulletRemover remover))
-            {
-                ReturnToPool();
-                return true;
-            }
-
-            return false;
-        }
-
-        private void TryHandleDamage(Collider2D other)
-        {
             if (other.TryGetComponent(out IDamageable damageable))
             {
-                if (CanDamage(other))
-                {
-                    damageable.TakeDamage();
-                    ReturnToPool();
-                }
-            }
-        }
-
-        private bool CanDamage(Collider2D other)
-        {
-            if (_isPlayerBullet && other.TryGetComponent(out Enemy.Enemy _))
-                return true;
-
-            if (!_isPlayerBullet && other.TryGetComponent(out Bird.Bird _))
-                return true;
-
-            return false;
-        }
-
-        private void ReturnToPool()
-        {
-            if (_pool != null)
-            {
-                _pool.PutObject(this);
-            }
-            else
-            {
-                Destroy(gameObject);
+                damageable.TakeDamage();
+                gameObject.SetActive(false);
             }
         }
 
         private void OnBecameInvisible()
         {
-            ReturnToPool();
+            gameObject.SetActive(false);
         }
     }
 }

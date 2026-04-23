@@ -63,7 +63,6 @@ namespace Assets.Scripts.Enemy
                     }
                     enemy.transform.SetParent(_container);
                     enemy.transform.position = Vector3.zero;
-                    _pool.Enqueue(enemy);
                 }
             }
 

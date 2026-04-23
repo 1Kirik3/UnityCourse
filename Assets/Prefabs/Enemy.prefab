@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8312470231189150581}
   - component: {fileID: 2936924780216488736}
   - component: {fileID: 6751890188020425450}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shootDelay: 1
-  _bulletPool: {fileID: 0}
+  _bulletLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!212 &8312470231189150581
 SpriteRenderer:
   m_ObjectHideFlags: 0
