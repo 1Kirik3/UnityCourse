@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Interfaces
@@ -5,11 +6,9 @@ namespace Assets.Scripts.Interfaces
     public interface IResource
     {
         Vector3 Position { get; }
-        bool IsTargeted { get; }
-        void SetTargeted(bool state);
+        event Action<IResource> Collected;
         void PickUp(Transform carryPoint);
         void Collect();
-
     }
 }
 

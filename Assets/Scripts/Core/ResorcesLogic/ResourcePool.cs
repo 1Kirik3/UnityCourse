@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.Pool;
 
-namespace Assets.Scripts.Core
+namespace Assets.Scripts.Core.ResourcesLogic
 {
     public class ResourcePool : MonoBehaviour
     {
         [SerializeField] private Resource _prefab;
         [SerializeField] private int _defaultCapacity = 10;
         [SerializeField] private int _maxSize = 50;
-        [SerializeField] private bool _collectionCheck = true;
 
         private IObjectPool<Resource> _pool;
 
@@ -19,7 +18,7 @@ namespace Assets.Scripts.Core
                 actionOnGet: OnTakeFromPool,
                 actionOnRelease: OnReturnedToPool,
                 actionOnDestroy: OnDestroyPoolObject,
-                collectionCheck: _collectionCheck,
+                collectionCheck: true,
                 defaultCapacity: _defaultCapacity,
                 maxSize: _maxSize
             );
@@ -29,6 +28,7 @@ namespace Assets.Scripts.Core
         {
             return _pool.Get();
         }
+
         public void Release(Resource resource)
         {
             _pool.Release(resource);
@@ -36,14 +36,12 @@ namespace Assets.Scripts.Core
 
         private Resource CreateInstance()
         {
-            Resource instance = Instantiate(_prefab);
-            return instance;
+            return Instantiate(_prefab);
         }
 
         private void OnTakeFromPool(Resource resource)
         {
             resource.gameObject.SetActive(true);
-            resource.Initialize(Release);
         }
 
         private void OnReturnedToPool(Resource resource)

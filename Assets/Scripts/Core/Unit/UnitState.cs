@@ -1,5 +1,5 @@
 ﻿
-namespace Assets.Scripts.Core
+namespace Assets.Scripts.Core.Unit
 {
     public enum UnitState
     {

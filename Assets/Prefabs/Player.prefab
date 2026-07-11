@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 4030454929996339160}
   - component: {fileID: 2665256102251843884}
   - component: {fileID: 388005815150245848}
-  - component: {fileID: 7876145676674514167}
+  - component: {fileID: 8391633188028694071}
+  - component: {fileID: 8490870214626935870}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -132,7 +133,7 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &7876145676674514167
+--- !u!114 &8391633188028694071
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,7 +142,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 6404659470148589632}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 436f242abf64d6649af80e609e7dae26, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ba2c45e92982e5408bf030bfd521e01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8490870214626935870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6404659470148589632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b86ce9ad822863744abc07c82250e953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _carryPoint: {fileID: 6257897835446015172}
@@ -171,7 +184,7 @@ Transform:
   m_GameObject: {fileID: 9211193022884343125}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.78, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -1,19 +1,16 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Interfaces;
+using System.Collections;
+using UnityEngine;
 
-namespace Assets.Scripts.Core
+namespace Assets.Scripts.Core.ResourcesLogic
 {
     [RequireComponent(typeof(ResourcePool))]
     public class ResourceSpawner : MonoBehaviour
     {
-        [Header("References")]
         [SerializeField] private ResourcePool _resourcePool;
-
-        [Header("Spawn Settings")]
         [SerializeField] private float _spawnInterval = 3f;
         [SerializeField] private Vector2 _spawnAreaSize = new Vector2(20f, 20f);
         [SerializeField] private float _spawnHeightOffset = 0.5f;
-
-        private float _timer;
 
         private void Awake()
         {
@@ -23,12 +20,18 @@ namespace Assets.Scripts.Core
             }
         }
 
-        private void Update()
+        private void Start()
         {
-            _timer += Time.deltaTime;
-            if (_timer >= _spawnInterval)
+            StartCoroutine(SpawnRoutine());
+        }
+
+        private IEnumerator SpawnRoutine()
+        {
+            var waitInterval = new WaitForSeconds(_spawnInterval);
+
+            while (true)
             {
-                _timer = 0f;
+                yield return waitInterval;
                 SpawnResource();
             }
         }
@@ -36,6 +39,7 @@ namespace Assets.Scripts.Core
         private void SpawnResource()
         {
             Resource resource = _resourcePool.Get();
+            resource.ResetState();
 
             Vector3 randomPosition = new Vector3(
                 Random.Range(-_spawnAreaSize.x / 2f, _spawnAreaSize.x / 2f),
@@ -44,13 +48,18 @@ namespace Assets.Scripts.Core
             ) + transform.position;
 
             resource.transform.position = randomPosition;
+
+            resource.Collected += HandleResourceCollected;
         }
 
-        private void OnDrawGizmosSelected()
+        private void HandleResourceCollected(IResource resource)
         {
-            Gizmos.color = Color.yellow;
-            Vector3 center = transform.position + Vector3.up * _spawnHeightOffset;
-            Gizmos.DrawWireCube(center, new Vector3(_spawnAreaSize.x, 0.1f, _spawnAreaSize.y));
+            resource.Collected -= HandleResourceCollected;
+
+            if (resource is Resource poolableResource)
+            {
+                _resourcePool.Release(poolableResource);
+            }
         }
     }
 }
