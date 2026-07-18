@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Interfaces;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ namespace Assets.Scripts.Core.ResourcesLogic
         private readonly HashSet<IResource> _unreservedResources = new HashSet<IResource>();
         private readonly HashSet<IResource> _reservedResources = new HashSet<IResource>();
 
+        public event Action ResourceAdded;
+
         public void RegisterFoundResource(IResource resource)
         {
             if (_unreservedResources.Contains(resource) || _reservedResources.Contains(resource))
@@ -18,6 +21,9 @@ namespace Assets.Scripts.Core.ResourcesLogic
 
             _unreservedResources.Add(resource);
             resource.Collected += HandleResourceCollected;
+
+            // Будим все базы на карте!
+            ResourceAdded?.Invoke();
         }
 
         public bool TryGetUnreservedResource(out IResource resource)
@@ -39,6 +45,7 @@ namespace Assets.Scripts.Core.ResourcesLogic
             if (_reservedResources.Remove(resource))
             {
                 _unreservedResources.Add(resource);
+                ResourceAdded?.Invoke();
             }
         }
 

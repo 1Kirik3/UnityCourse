@@ -9,6 +9,9 @@ namespace Assets.Scripts.Core.Base
 
         private int _collectedResourcesAmount = 0;
 
+        public int CurrentAmount => _collectedResourcesAmount;
+
+
         private void Start()
         {
             ResourcesChanged?.Invoke(_collectedResourcesAmount);
@@ -18,6 +21,19 @@ namespace Assets.Scripts.Core.Base
         {
             _collectedResourcesAmount++;
             ResourcesChanged?.Invoke(_collectedResourcesAmount);
+        }
+
+        public bool TrySpend(int amount)
+        {
+            if (_collectedResourcesAmount < amount)
+            {
+                return false;
+            }
+
+            _collectedResourcesAmount -= amount;
+            ResourcesChanged?.Invoke(_collectedResourcesAmount);
+
+            return true;
         }
     }
 }
