@@ -2,40 +2,43 @@
 
 namespace Assets.Scripts
 {
-    [RequireComponent(typeof(BotMovement))]
+    [RequireComponent(typeof(RigidbodyMover))]
+    [RequireComponent(typeof(RigidbodyRotator))]
     [RequireComponent(typeof(StepClimber))]
     public class BotAI : MonoBehaviour
     {
         [Header("Target & Distance")]
-        [SerializeField] private Transform target;
-        [SerializeField] private float stoppingDistance = 2.5f;
+        [SerializeField] private Transform _target;
+        [SerializeField] private float _stoppingDistance = 2.5f;
 
-        [SerializeField] private BotMovement movement;
-        [SerializeField] private StepClimber climber;
+        [Header("Components settings")]
+        [SerializeField] private RigidbodyMover _mover;
+        [SerializeField] private RigidbodyRotator _rotator;
+        [SerializeField] private StepClimber _stepClimber;
 
         private void FixedUpdate()
         {
-            if (target == null) 
+            if (_target == null) 
                 return;
 
-            Vector3 directionToTarget = CalculateFlatDirection(transform.position, target.position, out float flatDistance);
+            Vector3 directionToTarget = CalculateFlatDirection(transform.position, _target.position, out float flatDistance);
 
             if (directionToTarget == Vector3.zero) 
                 return;
 
-            movement.RotateTowards(directionToTarget);
+            _rotator.RotateTowardsDirection(directionToTarget);
 
-            if (flatDistance > stoppingDistance)
+            if (flatDistance > _stoppingDistance)
             {
-                movement.MoveTowards(directionToTarget);
-                climber.TryStep(directionToTarget);
+                _mover.MoveInDirection(directionToTarget);
+                _stepClimber.TryStep(directionToTarget);
             }
         }
 
-        private Vector3 CalculateFlatDirection(Vector3 current, Vector3 targetPos, out float distance)
+        private Vector3 CalculateFlatDirection(Vector3 currentPosition, Vector3 targetPosition, out float distance)
         {
-            Vector3 flatCurrent = new Vector3(current.x, 0f, current.z);
-            Vector3 flatTarget = new Vector3(targetPos.x, 0f, targetPos.z);
+            Vector3 flatCurrent = new Vector3(currentPosition.x, 0f, currentPosition.z);
+            Vector3 flatTarget = new Vector3(targetPosition.x, 0f, targetPosition.z);
 
             Vector3 direction = flatTarget - flatCurrent;
             distance = direction.magnitude;

@@ -7,8 +7,9 @@ namespace Assets.Scripts
     {
         private const string HorizontalAxis = "Horizontal";
         private const string VerticalAxis = "Vertical";
+        private const float MaxInputMagnitudeSquare = 1.0f;
 
-        public event Action<Vector3> OnMoveInput;
+        public event Action<Vector3> MoveInputReceived;
 
         private void Update()
         {
@@ -17,12 +18,12 @@ namespace Assets.Scripts
 
             Vector3 inputDirection = new Vector3(inputX, 0f, inputZ);
 
-            if (inputDirection.sqrMagnitude > 1.0f)
+            if (inputDirection.sqrMagnitude > MaxInputMagnitudeSquare)
             {
                 inputDirection.Normalize();
             }
 
-            OnMoveInput?.Invoke(inputDirection);
+            MoveInputReceived?.Invoke(inputDirection);
         }
     }
 }

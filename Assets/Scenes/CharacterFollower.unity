@@ -2586,9 +2586,10 @@ GameObject:
   - component: {fileID: 740369366}
   - component: {fileID: 740369365}
   - component: {fileID: 740369364}
-  - component: {fileID: 740369363}
   - component: {fileID: 740369362}
-  - component: {fileID: 740369361}
+  - component: {fileID: 740369372}
+  - component: {fileID: 740369371}
+  - component: {fileID: 740369370}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -2596,22 +2597,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &740369361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740369360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8ae3c5ef53442c4795ca954ef0e1e91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 2029346660}
-  stoppingDistance: 3
-  movement: {fileID: 740369363}
-  climber: {fileID: 740369362}
 --- !u!114 &740369362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2624,25 +2609,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb5ccbbb2ee01ff4b90ac035a46d5304, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stepHeight: 1
-  stepRayDistance: 0.6
-  lowerRayOffset: 0.1
-  stepSmooth: 5
---- !u!114 &740369363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740369360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0d7117e3ab0b0e449801fa64044b4e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 25
-  rotationSpeed: 10
-  rb: {fileID: 740369364}
+  _stepHeight: 5
+  _stepRayDistance: 0.6
+  _lowerRayOffset: 0.1
+  _stepSmooth: 5
+  _rigidbody: {fileID: 740369364}
 --- !u!54 &740369364
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2784,6 +2755,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &740369370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740369360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8ae3c5ef53442c4795ca954ef0e1e91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 2029346660}
+  _stoppingDistance: 4.5
+  _mover: {fileID: 740369372}
+  _rotator: {fileID: 740369371}
+  _stepClimber: {fileID: 740369362}
+--- !u!114 &740369371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740369360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8211b25277041ab43b30f9138298b562, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotationSpeed: 10
+  _rigidbody: {fileID: 740369364}
+--- !u!114 &740369372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740369360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c31692c4468626e468b39222d0c025e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeed: 30
+  _rigidbody: {fileID: 740369364}
 --- !u!1 &805068283
 GameObject:
   m_ObjectHideFlags: 0
@@ -4942,11 +4958,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fb5a4e09f6106345a7b92955192fa91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 30
-  gravityValue: -9.81
-  groundedGripForce: -2
-  controller: {fileID: 2029346663}
-  inputHandler: {fileID: 880873669}
+  _moveSpeed: 35
+  _gravityValue: -9.81
+  _groundedGripForce: -2
+  _characterController: {fileID: 2029346663}
+  _inputHandler: {fileID: 880873669}
 --- !u!143 &2029346663
 CharacterController:
   m_ObjectHideFlags: 0

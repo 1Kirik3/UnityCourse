@@ -6,34 +6,30 @@ namespace Assets.Scripts
     public class StepClimber : MonoBehaviour
     {
         [Header("Step Detection")]
-        [SerializeField] private float stepHeight = 0.4f;
-        [SerializeField] private float stepRayDistance = 0.6f;
-        [SerializeField] private float lowerRayOffset = 0.1f;
+        [SerializeField] private float _stepHeight = 0.4f;
+        [SerializeField] private float _stepRayDistance = 0.6f;
+        [SerializeField] private float _lowerRayOffset = 0.1f;
 
         [Header("Step Response")]
-        [SerializeField] private float stepSmooth = 5.0f;
+        [SerializeField] private float _stepSmooth = 5.0f;
 
-        private Rigidbody rb;
-
-        private void Awake()
-        {
-            rb = GetComponent<Rigidbody>();
-        }
+        [SerializeField] private Rigidbody _rigidbody;
 
         public void TryStep(Vector3 moveDirection)
         {
-            if (moveDirection == Vector3.zero) return;
+            if (moveDirection == Vector3.zero) 
+                return;
 
-            Vector3 lowerOrigin = rb.position + Vector3.up * lowerRayOffset;
-            Vector3 upperOrigin = rb.position + Vector3.up * stepHeight;
+            Vector3 lowerOrigin = _rigidbody.position + Vector3.up * _lowerRayOffset;
+            Vector3 upperOrigin = _rigidbody.position + Vector3.up * _stepHeight;
 
-            bool hasObstacleBelow = Physics.Raycast(lowerOrigin, moveDirection, stepRayDistance);
-            bool hasClearanceAbove = !Physics.Raycast(upperOrigin, moveDirection, stepRayDistance);
+            bool hasObstacleBelow = Physics.Raycast(lowerOrigin, moveDirection, _stepRayDistance);
+            bool hasClearanceAbove = !Physics.Raycast(upperOrigin, moveDirection, _stepRayDistance);
 
             if (hasObstacleBelow && hasClearanceAbove)
             {
-                Vector3 targetPosition = rb.position + Vector3.up * (stepSmooth * Time.fixedDeltaTime);
-                rb.MovePosition(targetPosition);
+                Vector3 targetPosition = _rigidbody.position + Vector3.up * (_stepSmooth * Time.fixedDeltaTime);
+                _rigidbody.MovePosition(targetPosition);
             }
         }
     }
